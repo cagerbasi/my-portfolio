@@ -1,30 +1,34 @@
 "use client"
 
-import { useEffect, useRef } from "react";
+import { useRef, useState } from "react";
 
 import Image from "next/image";
 
 export default function Home() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
 
-  useEffect(() => {
-    const playAudio = async () => {
-      try {
-        if (audioRef.current) {
-          await audioRef.current.play();
-        }
+
+  const togglePlay = () => {
+    if (audioRef.current) {
+      if (isPlaying) {
+        audioRef.current.pause();
+      } else {
+        audioRef.current.play().catch(err => console.error("\nFile: page.tsx\nFunction: togglePlay()\nCalled: play()\nError: ", err));
       }
-      catch (error){
-        console.error("\nFile: page.tsx\nFunction: Home()\n Called: play()\n Error: ", error);
-      }
-    };
-
-    playAudio();
-  }, []);
-
+      setIsPlaying(!isPlaying);
+    }
+  }
+  
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
+        <button
+          onClick={togglePlay}
+          style={{ padding: "10px", fontSize: "16px", cursor: "pointer" }}
+        > 
+          {isPlaying ? "Pause Music" : "Play Music"}
+        </button>
         <audio ref={audioRef} src="/eclipse.mp3" loop/>
         <Image
           className="dark:invert"
