@@ -1,35 +1,20 @@
 "use client"
 
-import { useRef, useState } from "react";
-
 import Image from "next/image";
 
 export default function Home() {
-  const audioRef = useRef<HTMLAudioElement | null>(null);
-  const [isPlaying, setIsPlaying] = useState(false);
-
-
-  const togglePlay = () => {
-    if (audioRef.current) {
-      if (isPlaying) {
-        audioRef.current.pause();
-      } else {
-        audioRef.current.play().catch(err => console.error("\nFile: page.tsx\nFunction: togglePlay()\nCalled: play()\nError: ", err));
-      }
-      setIsPlaying(!isPlaying);
-    }
-  }
-  
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <button
-          onClick={togglePlay}
-          style={{ padding: "10px", fontSize: "16px", cursor: "pointer" }}
-        > 
-          {isPlaying ? "Pause Music" : "Play Music"}
-        </button>
-        <audio ref={audioRef} src="/eclipse.mp3" loop/>
+        <iframe 
+          style={{borderRadius: "12px"}}
+          src="https://open.spotify.com/embed/playlist/1DiBGeJfqAulnREYJIhsKs?utm_source=generator" 
+          width="100%" 
+          height="352"
+          allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+          loading="lazy"
+        >
+        </iframe>
         <Image
           className="dark:invert"
           src="/next.svg"
