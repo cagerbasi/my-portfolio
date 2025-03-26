@@ -40,7 +40,6 @@ const ChatList = ({currentUserId, onSelect}: ChatListProps) => {
         fetchUsers();
     }, []);
 
-
     return (
         <Box
             style={{
@@ -57,7 +56,7 @@ const ChatList = ({currentUserId, onSelect}: ChatListProps) => {
                     top: 20,
                     right: 20,
                 }}
-                >
+            >
                 <Button
                     variant="light"
                     color="red"
@@ -85,13 +84,13 @@ const ChatList = ({currentUserId, onSelect}: ChatListProps) => {
                         {loading ? (
                             Array.from({ length: 3 }).map((_, index) => (
                                 <Paper key={index} p="sm" radius="md" withBorder>
-                                  <Group>
+                                    <Group>
                                     <Skeleton height={40} circle />
                                     <Stack gap={4} style={{ flex: 1 }}>
-                                      <Skeleton height={10} width="60%" />
-                                      <Skeleton height={8} width="40%" />
+                                        <Skeleton height={10} width="60%" />
+                                        <Skeleton height={8} width="40%" />
                                     </Stack>
-                                  </Group>
+                                    </Group>
                                 </Paper>
                               ))
                         ) : (

@@ -19,32 +19,13 @@ AWS.config.update({
 });
 
 const dynamoDB = new AWS.DynamoDB.DocumentClient();
-const TABLE_NAME = process.env.DYNAMODB_TABLE;
-
-// Test Route: Check Connection to DynamoDB
-app.get("/test-dynamodb", async (req, res) => {
-  try {
-    const params = {
-      TableName: TABLE_NAME,
-      KeyConditionExpression: "conversationId = :id",
-      ExpressionAttributeValues: {
-        ":id": "test-conversation"
-      }
-    };
-    console.log(params);
-
-    const data = await dynamoDB.query(params).promise();
-    res.json({ success: true, data });
-  } catch (error) {
-    console.error("DynamoDB Error:", error);
-    res.status(500).json({ success: false, error: error.message });
-  }
-});
+const MESSAGES_TABLE = process.env.MESSAGES_TABLE;
+const USERS_TABLE = process.env.USERS_TABLE;
 
 app.get('/users', async (req, res) => {
   try {
     const params = {
-      TableName: 'Monastery-Users'
+      TableName: USERS_TABLE
     };
 
     const data = await dynamoDB.scan(params).promise();
@@ -63,7 +44,7 @@ app.post("/send-message", async (req, res) => {
   }
 
   const params = {
-    TableName: TABLE_NAME,
+    TableName: MESSAGES_TABLE,
     Item: {
       conversationId,
       timestamp: Date.now(), // Use current time as sort key
@@ -98,7 +79,7 @@ app.get("/get-messages", async (req, res) => {
   }
 
   const params = {
-    TableName: TABLE_NAME,
+    TableName: MESSAGES_TABLE,
     KeyConditionExpression: "conversationId = :id",
     ExpressionAttributeValues: {
       ":id": conversationId
