@@ -53,7 +53,9 @@ interface LoginSelectProps {
 
     const handlePassword = () => {
         setStep(3);
-        localStorage.setItem('chat-username', userId);
+        if (typeof window !== 'undefined') {
+            localStorage.setItem('chat-username', userId);
+        }
         onLogin(userId);
     }
 
@@ -133,12 +135,14 @@ interface LoginSelectProps {
                         <ChatList
                             currentUserId={userId}
                             onSelect={(receiverId) => {
-                                const sorted = [userId, receiverId].sort();
-                                const conversationId = `${sorted[0]}-${sorted[1]}`;
-                                localStorage.setItem('chat-username', userId);
-                                localStorage.setItem('chat-receiver', receiverId);
-                                localStorage.setItem('chat-convoId', conversationId);
-                                router.push('/Chats');
+                                if (typeof window !== 'undefined') {
+                                    const sorted = [userId, receiverId].sort();
+                                    const conversationId = `${sorted[0]}-${sorted[1]}`;
+                                    localStorage.setItem('chat-username', userId);
+                                    localStorage.setItem('chat-receiver', receiverId);
+                                    localStorage.setItem('chat-convoId', conversationId);
+                                    router.push('/Chats');
+                                }
                             }}
                         />
                     </Stack>

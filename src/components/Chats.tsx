@@ -37,9 +37,11 @@ const Chat = ({sender, receiver, conversationId}: ChatProps) => {
     const scrollRef = useRef<HTMLDivElement | null>(null);
 
     useEffect(() => {
-        const user = localStorage.getItem('chat-username');
-        if (!user) {
-            router.replace('/LoginSelect');
+        if (typeof window !== 'undefined') {
+            const user = localStorage.getItem('chat-username');
+            if (!user) {
+                router.replace('/LoginSelect');
+            }
         }
     }, []);
 
@@ -173,10 +175,12 @@ const Chat = ({sender, receiver, conversationId}: ChatProps) => {
                     color="red"
                     size="xs"
                     onClick={() => {
-                        localStorage.removeItem('chat-username');
-                        localStorage.removeItem('chat-receiver');
-                        localStorage.removeItem('chat-convoId');
-                        router.replace('/LoginSelect')
+                        if (typeof window !== 'undefined') {
+                            localStorage.removeItem('chat-username');
+                            localStorage.removeItem('chat-receiver');
+                            localStorage.removeItem('chat-convoId');
+                            router.replace('/LoginSelect')
+                        }
                     }}
                 >
                     Log Out

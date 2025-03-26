@@ -9,14 +9,16 @@ export default function ChatsPage() {
   const [conversationId, setConversationId] = useState<string | null>(null);
 
   useEffect(() => {
-    const storedSender = localStorage.getItem('chat-username');
-    const storedReceiver = localStorage.getItem('chat-receiver');
-    const storedConversationId = localStorage.getItem('chat-convoId');
+    if (typeof window !== 'undefined') {
+      const storedSender = localStorage.getItem('chat-username');
+      const storedReceiver = localStorage.getItem('chat-receiver');
+      const storedConversationId = localStorage.getItem('chat-convoId');
 
-    if (storedSender && storedReceiver && storedConversationId) {
-      setSender(storedSender);
-      setReceiver(storedReceiver);
-      setConversationId(storedConversationId);
+      if (storedSender && storedReceiver && storedConversationId) {
+        setSender(storedSender);
+        setReceiver(storedReceiver);
+        setConversationId(storedConversationId);
+      }
     }
   }, []);
 

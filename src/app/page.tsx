@@ -8,13 +8,15 @@ export default function Home() {
 
   useEffect(() => {
     // If we already have session info, go straight to chats
-    const user = localStorage.getItem('chat-username');
-    const convo = localStorage.getItem('chat-convoId');
+    if (typeof window !== 'undefined') {
+      const user = localStorage.getItem('chat-username');
+      const convo = localStorage.getItem('chat-convoId');
 
-    if (user && convo) {
-      router.push('/chats');
-    } else {
-      router.push('/LoginSelect');
+      if (user && convo) {
+        router.push('/chats');
+      } else {
+        router.push('/LoginSelect');
+      }
     }
   }, [router]);
 

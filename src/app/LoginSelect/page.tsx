@@ -9,7 +9,9 @@ export default function LoginSelectPage() {
   return (
     <LoginSelect
       onLogin={(uid: string) => {
-        localStorage.setItem('chat-username', uid);
+        if (typeof window !== 'undefined') {
+          localStorage.setItem('chat-username', uid);
+        }
         router.push('/ChatList');
       }}
     />
